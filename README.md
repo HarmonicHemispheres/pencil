@@ -4,7 +4,7 @@
     <br />
     <br />
     <i>
-    ⚒️ Pencil is a simple AI-based multi-file project writer. ⚒️
+    ✏️ Pencil is a simple AI-based multi-file project writer. ✏️
     </i>
     <br />
     <br />

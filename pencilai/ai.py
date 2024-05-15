@@ -34,7 +34,7 @@ class AIEngine:
         </purpose>
 
         <rules>
-        - responsd in json format outlined in the <response> section
+        - ALWAYS responsd in json format outlined in the <response> section
         - use the original full file paths when referencing files to update
         - use the similar full file paths when creating new files and add them to the "files_to_create" list
         - use the full file paths when deleting files and add them to the "files_to_delete" list

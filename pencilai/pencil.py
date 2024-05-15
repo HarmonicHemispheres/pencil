@@ -35,7 +35,7 @@ class PencilAI:
                 with open(path, "r", encoding="utf-8") as file:
                     f = File(
                         name=path.name,
-                        full_path=path.absolute().as_posix(),
+                        full_file_path=path.absolute().as_posix(),
                         content=file.read()
                     )
                     file_contents.append(f)
