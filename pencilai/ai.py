@@ -1,6 +1,7 @@
 from openai import OpenAI
 from typing import List
-from pencilai.models import Message, File
+from pencilai.models.file_model import File
+from pencilai.models.message_model import Message
 import json
 
 
@@ -33,10 +34,11 @@ class AIEngine:
         </purpose>
 
         <rules>
-        - always responsd in json format outlined in the <response> section
-        - always use the original full file paths when referencing files to update
-        - always use the similar full file paths when creating new files and add them to the "files_to_create" list
-        - always use the full file paths when deleting files and add them to the "files_to_delete" list
+        - responsd in json format outlined in the <response> section
+        - use the original full file paths when referencing files to update
+        - use the similar full file paths when creating new files and add them to the "files_to_create" list
+        - use the full file paths when deleting files and add them to the "files_to_delete" list
+        - summarize the changes you suggest in the "summary" field of the response
         </rules>
 
         <files>
@@ -56,7 +58,8 @@ class AIEngine:
             "files_to_delete": [
                 {{"full_file_path": "<PATH>"}},
                 ...
-            ]
+            ],
+            "summary": "<BRIEF DESCRIPTION OF CHANGES>"
         }}
         </response>
         """

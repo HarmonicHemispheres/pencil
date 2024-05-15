@@ -1,11 +1,17 @@
-
 from pencilai.ai import AIEngine
-from pencilai.models import File
+from pencilai.models.file_model import File
 from pathlib import Path
 from typing import List
 from rich.console import Console
 import json
 
+ignore = [
+    ".png",
+    ".pyc",
+]
+ignore_paths = [
+    ".git"
+]
 
 
 class PencilAI:
@@ -23,8 +29,10 @@ class PencilAI:
         """
         file_contents = []
         for path in self.base_dir.rglob("*"):
-            if path.is_file():
-                with open(path, "r") as file:
+            if any([True if ip in str(path.absolute()) else False for ip in ignore_paths]):
+                continue
+            if path.is_file() and path.suffix not in ignore:
+                with open(path, "r", encoding="utf-8") as file:
                     f = File(
                         name=path.name,
                         full_path=path.absolute().as_posix(),
@@ -36,16 +44,14 @@ class PencilAI:
     def update_project(self, updates: dict):
         for file in updates.get("files_to_update", []):
             f = Path(file.get("full_file_path")).absolute()
-            # if not f.exists():
-            #     f.mkdir(parents=True, exist_ok=True)
-            f.write_text(file.get("content"))
+            f.write_text(file.get("content"), encoding="utf-8")
             self.console.print(f"🤖:  Updated file: '{f}'")
         
         for file in updates.get("files_to_create", []):
             f = Path(file.get("full_file_path")).absolute()
             if not f.exists():
                 f.parent.mkdir(parents=True, exist_ok=True)
-            f.write_text(file.get("content"))
+            f.write_text(file.get("content"), encoding="utf-8")
             self.console.print(f"🤖:  Created file: '{f}'")
         
         for file in updates.get("files_to_delete", []):
@@ -73,7 +79,7 @@ class PencilAI:
             # -- DECIDE JOB
             with self.console.status(f"🤖:[green4] {clever_work_notice} [/green4]", spinner="dots") as status:
                 response = self.ai.ask(prompt, files=self.read_entire_project())
-            self.console.print(f"\n🤖:  {json.dumps(response, indent=3)}")
+            self.console.print(f"\n🤖:  {response.get("summary")}")
 
             # update files
             self.update_project(response)
