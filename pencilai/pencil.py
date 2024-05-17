@@ -40,7 +40,25 @@ class PencilAI:
                     )
                     file_contents.append(f)
         return file_contents
-    
+
+    def list_all_files(self):
+        """
+        Prints out the list of all files in the project directory using rich.print and markdown.
+        """
+        file_paths = []
+        for path in self.base_dir.rglob("*"):
+            if any([True if ip in str(path.absolute()) else False for ip in ignore_paths]):
+                continue
+            if path.is_file() and path.suffix not in ignore:
+                file_paths.append(path.absolute().as_posix())
+
+        if file_paths:
+            self.console.print("# Project Files\n", justify="left")
+            for file_path in file_paths:
+                self.console.print(f"- {file_path}", justify="left")
+        else:
+            self.console.print("No files found.", justify="left")
+
     def update_project(self, updates: dict):
         for file in updates.get("files_to_update", []):
             f = Path(file.get("full_file_path")).absolute()

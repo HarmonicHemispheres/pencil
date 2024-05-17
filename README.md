@@ -39,6 +39,7 @@ Pencil is a simple AI-based multi-file project writer. It leverages OpenAI's mod
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage](#usage)
+- [CLI Commands](#cli-commands)
 - [Contributing](#contributing)
 
 <br>
@@ -51,7 +52,7 @@ To get started with Pencil, you can follow the instructions provided below for i
 <br>
 
 ## Installation
-> NOTE: This package works with [Python](https://www.python.org/downloads/) >=3.12
+> NOTE: This package works with [Python](https://www.python.org/downloads/) >= 3.12
 
 ### Install from Github
 
@@ -77,6 +78,19 @@ pencil chat --openai-api-key "<YOUR_OPENAI_API_KEY>"
 ```
 Replace `<YOUR_OPENAI_API_KEY>` with your actual OpenAI API key.
 
+<br>
+<br>
+
+## CLI Commands
+To list all the files in the project directory:
+
+```
+pencil ls --base-dir "/path/to/project"
+```
+You can replace `/path/to/project` with the path to your project directory. Default is the current directory (`.`).
+
+<br>
+<br>
 
 ## Contributing
 We welcome contributions to Pencil! To do so, please follow these steps:

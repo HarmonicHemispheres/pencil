@@ -65,7 +65,12 @@ def chat(openai_api_key: str = "", base_dir: Optional[str] = "."):
     app.chat()
     
 
+@cli.command()
+def ls(base_dir: Optional[str] = "."):
+    """ List all the files in the project directory """
 
+    app = PencilAI(base_dir=base_dir)
+    app.list_all_files()
 
 # ::DEFAULT CLI COMMANDS ---------------------------------------------------------------------------- #
 @cli.command()
